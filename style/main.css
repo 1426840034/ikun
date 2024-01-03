@@ -15,10 +15,38 @@
     background-position: 5% 50%;
   }
 }
+@keyframes shakeX {
+  from,
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+/* 定义一个使用shakeX动画的类 */
+.shake {
+  animation: shakeX 0.7s;
+}
 
 :root {
   --textFocusColor: rgb(116, 169, 255);
-  --textNoFocusColor: rgba(122, 178, 255, 0.7);
+  --textNoFocusColor: rgba(113, 172, 255, 0.7);
   /* 定义变量 */
   /* DONE 使用变量统一元素 */
 }
@@ -56,8 +84,26 @@ body {
   height: 100vh;
   align-items: center;
   justify-content: center;
+  /* 禁止用户选中文字 */
+  user-select: none;
   /* overflow: hidden; */
   /* 禁止滚动 */
+}
+
+/* 鼠标样式 */
+* {
+  cursor: url(../images/pointer.png), default !important;
+}
+a:hover,
+button:hover,
+input[type="submit"]:hover,
+.aplayer-icon:hover,
+.aplayer-button:hover {
+  cursor: url(../images/link.png), pointer !important;
+}
+input[type="text"],
+input[type="password"] {
+  cursor: url(../images/beam.png), text !important;
 }
 
 .mainbody {
@@ -68,7 +114,7 @@ body {
   margin: 10% auto;
   width: 56rem;
   height: 35rem;
-  background-color: rgba(255, 255, 255, 0.55);
+  background-color: #dbecfe;
   border-radius: 1.5rem;
   box-shadow: 0 0 2rem 0.1rem rgba(0, 0, 0, 0.1);
   z-index: 1;
@@ -84,8 +130,8 @@ body {
   content: "";
   position: absolute;
   background-size: cover;
-  background-image: url(/images/pz112528799.lite.png);
-  /* background-image: url(https://t.mwm.moe/mp); */
+  /* background-image: url(/images/pz112528799.lite.png); */
+  background-image: url(https://t.mwm.moe/mp);
   /* TODO 根据图片自动改变主题色 */
   background-position: center center;
   /* 设置背景图像的水平位置和垂直位置 */
@@ -100,12 +146,26 @@ body {
   transition: opacity 0.3s ease-in-out;
   z-index: 1;
 }
-#registerForm {
+#registerForm,
+#success {
   display: none;
   position: relative;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
+
+#success {
+  justify-content: center;
+}
+#success * {
+  display: block;
+  color: var(--textFocusColor);
+  margin-top: 0.5rem;
+}
+#success h2 {
+  margin-bottom: 50px;
+}
+
 .mainbody .right {
   display: flex;
   flex-direction: column;
@@ -146,6 +206,7 @@ body {
   border-bottom: 1px solid rgba(94, 155, 255, 0.6);
   font-weight: 400;
   border-radius: 0.2rem;
+  user-select: all;
 }
 
 .mainbody .right form .输入框::placeholder {
@@ -179,6 +240,7 @@ body {
     #ffbac3 100%
   );
   animation: flowCss 10s infinite linear;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .mainbody .right form .提交:hover {
@@ -252,12 +314,6 @@ body {
   opacity: 1;
 }
 
-.registerForm {
-  opacity: 0;
-  transition: opacity 1s;
-}
-
-/* TODO 页面加载完成时会闪现 */
 .作者链接 {
   position: absolute;
   right: -22px;
